@@ -15,7 +15,7 @@ namespace WishList.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        private IActionResult Register()
+        public IActionResult Register()
         {
             return View("Register");
         }
