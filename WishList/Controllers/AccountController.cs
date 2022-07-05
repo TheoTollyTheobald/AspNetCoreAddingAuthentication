@@ -62,7 +62,7 @@ namespace WishList.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Login", model);
+                return View(model);
             }
 
             var result = _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false).Result;
@@ -70,9 +70,10 @@ namespace WishList.Controllers
             if (!result.Succeeded)
             {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt");
+                return View(model);
             }
 
-            return RedirectToAction("Item", "Index");
+            return RedirectToAction("Index", "Item");
         }
 
         [HttpPost]
