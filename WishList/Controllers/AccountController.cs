@@ -22,7 +22,7 @@ namespace WishList.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        private IActionResult Register(RegisterViewModel registerViewModel)
+        public IActionResult Register(RegisterViewModel registerViewModel)
         {
             ApplicationUser user = new ApplicationUser()
             {
