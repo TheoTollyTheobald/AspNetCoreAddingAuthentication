@@ -29,22 +29,22 @@ namespace WishList.Controllers
                 Email = registerViewModel.Email,
                 UserName = registerViewModel.Email
             };
-            var userResult = _userManager.CreateAsync(user, registerViewModel.Password);
-            if (!userResult.Result.Succeeded)
+            var userResult = _userManager.CreateAsync(new ApplicationUser() { Email = registerViewModel.Email, UserName = registerViewModel.Email }, registerViewModel.Password).Result;
+            if (!userResult.Succeeded)
             {
-                foreach (var error in userResult.Result.Errors)
+                foreach (var error in userResult.Errors)
                 {
                     ModelState.AddModelError("Password", error.Description);
                 }
                 return View("Register", registerViewModel);
             }
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("HomeController.Index");
+                return View(registerViewModel);
             }
             else
             {
-                return View(registerViewModel);
+                return View("Index", "Home");
             }  
         }
 
