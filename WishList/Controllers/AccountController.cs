@@ -29,23 +29,23 @@ namespace WishList.Controllers
                 Email = registerViewModel.Email,
                 UserName = registerViewModel.Email
             };
+
             var userResult = _userManager.CreateAsync(new ApplicationUser() { Email = registerViewModel.Email, UserName = registerViewModel.Email }, registerViewModel.Password).Result;
+            
             if (!userResult.Succeeded)
             {
                 foreach (var error in userResult.Errors)
                 {
                     ModelState.AddModelError("Password", error.Description);
                 }
-                return View("Register", registerViewModel);
+                return View(registerViewModel);
             }
             if (!ModelState.IsValid)
             {
                 return View(registerViewModel);
             }
-            else
-            {
-                return View("Index", "Home");
-            }  
+
+            return RedirectToAction("Index", "Home"); 
         }
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
